@@ -15,3 +15,9 @@ php -v
 /etc/php
 sudo apt install 8.2 8.3 8.4
 sudo update-alternatives --set php /usr/bin/php8.x
+
+### Code Quality with PHPStand, Codesniffer and PHPLint
+
+ddev exec composer run-phpstan
+ddev exec composer run-phpcs
+ddev exec composer run-phplint
