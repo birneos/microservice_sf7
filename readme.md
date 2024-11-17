@@ -48,4 +48,7 @@ We are looking for two different pieces of data?
    - objects has toArray Method to output in array format
 
 3. Create temporary Model
+
    - create models.php that has a anonymous class which implement model interface an return array with data
+
+4. Create Client with 2 Endpoints to send data for indifiying or tracking
