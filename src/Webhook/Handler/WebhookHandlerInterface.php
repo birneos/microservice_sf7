@@ -11,5 +11,5 @@ interface WebhookHandlerInterface
 
     public function supports(Webhook $webhook): bool;
 
-    public function handle(Webhook $webhook);
+    public function handle(Webhook $webhook): void;
 }
