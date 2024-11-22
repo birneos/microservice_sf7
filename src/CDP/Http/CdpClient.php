@@ -10,7 +10,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CdpClient
 {
-    private const string CDP_API_URL = 'https://some-cdp-api.com';
+    private const CDP_API_URL = 'https://some-cdp-api.com';
+
     public function __construct(
         private HttpClientInterface $httpClient,
         #[Autowire('%cdp_api_key%')] private string $apiKey
@@ -22,7 +23,7 @@ class CdpClient
 
         $this->httpClient->request(
             'POST',
-            self::CDP_API_URL . '/',
+            self::CDP_API_URL . '/track',
             [
                 'body' => json_encode($model->toArray(), JSON_THROW_ON_ERROR),
                 'headers' =>
