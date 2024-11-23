@@ -1,4 +1,4 @@
-<?php // src/DTO/Webhook.php
+<?php
 
 declare(strict_types=1);
 
