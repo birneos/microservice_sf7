@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace App\Webhook\Handler;
 
+use App\DTO\Newsletter\Factory\NewsletterWebhookFactory;
 use App\DTO\Webhook;
 
 class NewsletterHandler implements WebhookHandlerInterface
 {
+    public function __construct(
+        private NewsletterWebhookFactory $newsletterWebhookFactory
+    )
+    {
+        
+    }
     private const SUPPORTED_EVENTS = [
         'newsletter_opened',
         'newsletter_subscribed',
@@ -22,6 +29,7 @@ class NewsletterHandler implements WebhookHandlerInterface
 
     public function handle(Webhook $webhook): void
     {
+        $newsletterWebhook = $this->newsletterWebhookFactory->create($webhook);
         dd($webhook);
     }
 }
