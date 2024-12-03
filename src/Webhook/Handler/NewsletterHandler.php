@@ -6,11 +6,17 @@ namespace App\Webhook\Handler;
 
 use App\DTO\Newsletter\Factory\NewsletterWebhookFactory;
 use App\DTO\Webhook;
+use App\Forwarder\Newsletter\ForwarderInterface;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class NewsletterHandler implements WebhookHandlerInterface
 {
+    /**
+     * @param iterable<ForwarderInterface> $forwarders
+     */
     public function __construct(
-        private NewsletterWebhookFactory $newsletterWebhookFactory
+        private NewsletterWebhookFactory $newsletterWebhookFactory,
+        #[AutowireIterator('forwarder.newsletter')] private iterable $forwarders
     )
     {
         
@@ -30,6 +36,17 @@ class NewsletterHandler implements WebhookHandlerInterface
     public function handle(Webhook $webhook): void
     {
         $newsletterWebhook = $this->newsletterWebhookFactory->create($webhook);
-        dd($webhook);
+      
+        //Loop over forwarders
+        foreach( $this->forwarders as $forwarder){
+
+            // If supported
+            if($forwarder->supports($newsletterWebhook)){
+
+                //Forward the data
+                $forwarder->forward($newsletterWebhook);
+            }
+        }
+       
     }
 }
