@@ -10,31 +10,28 @@ use App\Error\Exception\WebhookException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
-class NewsletterWebhookFactory{
-
+class NewsletterWebhookFactory
+{
     public function __construct(
-      private SerializerInterface $serializer
-      )
+        private SerializerInterface $serializer
+    ) {
+    }
+
+    public function create(Webhook $webhook): NewsletterWebhook
     {
-      
-    }
+        try {
+            $newsletterWebhook = $this->serializer->deserialize(
+                $webhook->getRawPayload(),
+                NewsletterWebhook::class,
+                'json'
+            );
 
-    public function create(Webhook $webhook):NewsletterWebhook{
-        try{
-          $newsletterWebhook = $this->serializer->deserialize(
-            $webhook->getRawPayload(),
-            NewsletterWebhook::class,
-            'json'
-          );
-  
-          return $newsletterWebhook;
-        }
-        catch(\Throwable $throwable){
+            return $newsletterWebhook;
+        } catch (\Throwable $throwable) {
           //throw WebhookException
-          throw new WebhookException(
-            'Unable to create NewsletterWebhook because' . $throwable->getMessage()
-          );
+            throw new WebhookException(
+                'Unable to create NewsletterWebhook because' . $throwable->getMessage()
+            );
         }
     }
-
 }

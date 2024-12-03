@@ -6,9 +6,9 @@ namespace App\Forwarder\Newsletter;
 
 use App\DTO\Newsletter\NewsletterWebhook;
 
-interface ForwarderInterface{
+interface ForwarderInterface
+{
+    public function supports(NewsletterWebhook $newsletterWebhook): bool;
 
-  public function supports(NewsletterWebhook $newsletterWebhook): bool;
-
-  public function forward(NewsletterWebhook $newsletterWebhook): void;
+    public function forward(NewsletterWebhook $newsletterWebhook): void;
 }

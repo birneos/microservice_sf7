@@ -17,10 +17,9 @@ class NewsletterHandler implements WebhookHandlerInterface
     public function __construct(
         private NewsletterWebhookFactory $newsletterWebhookFactory,
         #[AutowireIterator('forwarder.newsletter')] private iterable $forwarders
-    )
-    {
-        
+    ) {
     }
+
     private const SUPPORTED_EVENTS = [
         'newsletter_opened',
         'newsletter_subscribed',
@@ -36,17 +35,13 @@ class NewsletterHandler implements WebhookHandlerInterface
     public function handle(Webhook $webhook): void
     {
         $newsletterWebhook = $this->newsletterWebhookFactory->create($webhook);
-      
         //Loop over forwarders
-        foreach( $this->forwarders as $forwarder){
-
+        foreach ($this->forwarders as $forwarder) {
             // If supported
-            if($forwarder->supports($newsletterWebhook)){
-
+            if ($forwarder->supports($newsletterWebhook)) {
                 //Forward the data
                 $forwarder->forward($newsletterWebhook);
             }
         }
-       
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\DTO\Newsletter;
 
-class Newsletter{
-
+class Newsletter
+{
     private string $newsletterId;
 
     private string $topic;
